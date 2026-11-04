@@ -37,6 +37,12 @@ End the description with the public model name and harness that made the
 changes, for example `Created with <model> in <harness>.` Include subagent
 models that wrote part of the change. Use the model name the harness reports.
 If model identity is unavailable, name the harness without guessing a model.
+If the harness or the user's instructions give attribution lines for PRs,
+put them after this line; do not write a second, different attribution.
+
+If the repo's rules ask for more in the body (evidence links, a patch-notes
+line, a checklist a tool parses), include it after the explanation. Those
+rules win over "keep it short".
 
 Before submission, check the title, description, quotes, and attachments for
 secrets and private details.

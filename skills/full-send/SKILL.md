@@ -46,17 +46,24 @@ one appears.
    smallest change that works. Fix the case that happened, not every case
    that could. If you are on the default branch, create a branch first.
 2. **Prove it.** Get proof for every change you made. See "Proof".
-3. **Get feedback.** Use the `sol-loop` skill to verify changes.
+3. **Get feedback.** Use the `opus-loop` skill to verify changes. For
+   player-facing, money, save, engine or security diffs the repo's rules may
+   ask for `council` instead; follow them.
 4. **File the PR** with the `file-pr` skill. Rebase onto the latest default
    branch first. Add one short line to the description that says how you proved
    the change.
 5. **Babysit the PR** with the `babysit-pr` skill. Fix real findings and CI
    failures. Get proof for each fix before you push it.
 6. **Merge** when the merge gate passes.
-7. **Report** in your final message: the PR link, the merge commit, your proof,
-   and each decision you made for the user.
+7. **Ship it, if the repo says so.** Some repos treat a change the user asked
+   for in the live product as unfinished until it is deployed. If the repo's
+   `AGENTS.md` or `CLAUDE.md` says that, follow its deploy steps after the
+   merge. Its ask-first list (money, saves, payment keys, anything risky beyond
+   the request) still applies. Otherwise stop at the merge.
+8. **Report** in your final message: the PR link, the merge commit, the
+   deploy (if any), your proof, and each decision you made for the user.
 
-Stay active from step 1 to step 7. If you end your turn while checks or bots are
+Stay active from step 1 to step 8. If you end your turn while checks or bots are
 pending, the work stops, because nobody will prompt you again. Wait with the
 watcher from `babysit-pr`, so something wakes you when the PR changes. In T3
 Code that is `watch_pull_request`. If you stop before the merge, call
@@ -65,7 +72,9 @@ Code that is `watch_pull_request`. If you stop before the merge, call
 ## Proof
 
 Proof is evidence you observed yourself in this session: command output, a
-reproduction, a screenshot. Use the most direct proof the change allows:
+reproduction, a screenshot. If the repo has a Definition of Done (usually in
+`AGENTS.md`), it is the floor: every item on it, run where it says to run.
+Use the most direct proof the change allows:
 
 - Reproduce the original failure, apply the fix, then watch the same
   reproduction pass.
@@ -91,8 +100,8 @@ Full confidence means all of these are true on the latest commit:
 - The branch is up to date with the default branch, and GitHub reports it as
   mergeable.
 
-Merge with the method the repo uses. Check the allowed methods and recent merged
-PRs. If the repo uses a merge queue or auto-merge, stay until GitHub reports the
+Merge with the method the repo uses. Check the allowed methods, the repo's
+rules and recent merged PRs; when they disagree, the repo's rules win. If the repo uses a merge queue or auto-merge, stay until GitHub reports the
 PR as merged. Merge through branch protection as configured. Never use `--admin`
 or other bypasses. You can ignore automated reviews that request "needs human
 review" if you have high confidence in your changes.
@@ -109,9 +118,9 @@ Ask only when you cannot continue alone:
 
 - You cannot prove the change.
 - The merge gate cannot pass, and you cannot fix that yourself.
-- The next step is outside the grant above: deleting data, touching production,
-  changing things outside the repo, closing a PR, or force-pushing any other
-  branch.
+- The next step is outside the grant above: deleting data, touching production
+  beyond the deploy the repo's rules prescribe, changing things outside the
+  repo, closing a PR, or force-pushing any other branch.
 - The goal is ambiguous in a way that changes the result.
 - Another PR makes this one obsolete.
 
