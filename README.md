@@ -10,12 +10,11 @@ agent guard hook blocks any write to the upstream repo.
 
 ## What changed from upstream
 
-- **One provider.** Opus 5.5 is the primary model for everything. Upstream's
-  cross-provider reviews become fresh-context Opus reviews:
-  `sol-loop` is now `opus-loop` ("sol loop" still triggers it), and `council`
-  seats three Opus delegates with different lenses (correctness, player,
-  house rules). That is lens diversity, not provider diversity, and the skills
-  say so.
+- **Claude first, one Codex seat.** Opus 5.5 is the primary model for
+  everything. `sol-loop` is now `opus-loop`, a fresh-context Opus reviewer
+  ("sol loop" still triggers it). `council` keeps one cross-provider seat:
+  GPT-6.1 Sol through Codex for correctness, and Opus for player and house
+  rules.
 - **Images go to Codex.** New `codex-image` skill: Codex's image tool through
   the `codex` CLI, with the stdin prompt form that `-i` needs.
 - **Repo rules win.** The skills point at each repo's `AGENTS.md` /
@@ -32,7 +31,7 @@ agent guard hook blocks any write to the upstream repo.
 |---|---|---|
 | `full-send` | "full send" | Takes a change to a merged PR (and a deploy, where the repo says so) with nobody watching: proves it, reviews it, files it, babysits it, merges it. |
 | `full-stop` | "full stop" | Same as `full-send`, but stops when the PR is ready for you to merge. |
-| `council` | "council" | Three fresh-context Opus reviewers with different lenses; loops until they agree. |
+| `council` | "council" | Three fresh-context reviewers (Sol correctness, Opus player and house rules); loops until they agree. |
 | `opus-loop` | "opus loop", "sol loop" | Reviews a change with a fresh-context Opus reviewer in a loop until both agree. |
 | `file-pr` | "file a PR" | Files a short PR that leads with the problem, not an inventory of changes. |
 | `takeover` | "take over" | Finishes someone else's PR, branch, or agent thread, and keeps their credit. |
@@ -75,7 +74,7 @@ one-provider adaptation.
 
 - An authenticated [GitHub CLI](https://cli.github.com) (`gh`).
 - `python3` for `babysit-pr`'s `pr-wait` script.
-- The `codex` CLI, logged in, for `codex-image`.
+- The `codex` CLI, logged in, for `codex-image` and the council's Sol seat.
 
 ## License
 
