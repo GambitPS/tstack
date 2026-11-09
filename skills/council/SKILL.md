@@ -39,9 +39,36 @@ Start the Opus seats as native `Agent` subagents with `model: "opus"` and
 
 Send all three in one message so they run in parallel. If your instructions
 cap concurrent subagents, run them in waves under the cap. If Codex is out of
-usage or unavailable, say so and run that round with two seats, or ask the
-user. Do not quietly swap in an Opus Correctness seat. The same rule applies
+usage or unavailable, the Spark seat below takes Correctness for that round;
+say so. Do not quietly swap in an Opus Correctness seat. The same rule applies
 to any named member who is unavailable.
+
+## Spark seat (Meta Muse Spark 1.3, light use)
+
+Muse Spark 1.3 sits in two places only, because its allowance is small:
+
+- **Sign-off:** once the three seats above are all satisfied, run Spark
+  alone with the Correctness lens on the final diff. That is one review per
+  council. Run it after the other seats, never in their parallel wave. If it
+  finds a blocker (wrong behaviour, a compile or test failure, data loss),
+  fix it and re-run Spark only, once. Note its should-fix and nit findings
+  in the report, but do not act on them or start new rounds for them.
+- **Sol backup:** when Codex is out of usage or unavailable, Spark takes
+  the Correctness seat for every round Sol misses.
+
+Run it read-only:
+
+- In T3 Code: `delegate_task` on the `cliproxy` provider, model
+  `muse-spark-1.3`. Each T3 environment needs `muse-spark-1.3` in the CLI
+  Proxy provider's custom models; if T3 says the model is not advertised,
+  say so and skip the seat.
+- Elsewhere: `claude -p --model muse-spark-1.3 --permission-mode plan` with
+  `CLAUDE_CONFIG_DIR` pointed at the CLI proxy Claude home, wrapped in
+  `timeout 1800`. Put the prompt on stdin.
+
+If the proxy refuses Spark, say so and finish without it. Do not swap in
+another model. Use Muse Wonder only when the user asks: it costs about twice
+as much per review.
 
 Give each delegate the request and relevant context. For review or feedback,
 keep their work read-only. Collect their responses and summarize the useful
@@ -64,7 +91,12 @@ Rounds: 2
 | Sol · Correctness | 7/10 | 9/10 |
 | Opus · Player | 8/10 | 10/10 |
 | Opus · House rules | 7/10 | 9/10 |
+| Spark · Sign-off | — | 9/10 |
 ```
+
+Write `—` for a round a delegate did not join. When Spark stands in for Sol,
+label its row `Spark · Correctness (Sol unavailable)`. With Spark seated,
+say "three providers" rather than two.
 
 If a delegate gives no score, write `no score`. Do not invent one.
 If the PR is open, edit the description. Do not post a comment for this.

@@ -14,7 +14,8 @@ agent guard hook blocks any write to the upstream repo.
   everything. `sol-loop` is now `opus-loop`, a fresh-context Opus reviewer
   ("sol loop" still triggers it). `council` keeps one cross-provider seat:
   GPT-6.1 Sol through Codex for correctness, and Opus for player and house
-  rules.
+  rules. Meta's Muse Spark 1.3, through the CLI proxy, gives a one-off
+  sign-off review and stands in for Sol when Codex is out of usage.
 - **Images go to Codex.** New `codex-image` skill: Codex's image tool through
   the `codex` CLI, with the stdin prompt form that `-i` needs.
 - **Repo rules win.** The skills point at each repo's `AGENTS.md` /
@@ -31,7 +32,7 @@ agent guard hook blocks any write to the upstream repo.
 |---|---|---|
 | `full-send` | "full send" | Takes a change to a merged PR (and a deploy, where the repo says so) with nobody watching: proves it, reviews it, files it, babysits it, merges it. |
 | `full-stop` | "full stop" | Same as `full-send`, but stops when the PR is ready for you to merge. |
-| `council` | "council" | Three fresh-context reviewers (Sol correctness, Opus player and house rules); loops until they agree. |
+| `council` | "council" | Three fresh-context reviewers (Sol correctness, Opus player and house rules); loops until they agree, then a Muse Spark sign-off. |
 | `opus-loop` | "opus loop", "sol loop" | Reviews a change with a fresh-context Opus reviewer in a loop until both agree. |
 | `file-pr` | "file a PR" | Files a short PR that leads with the problem, not an inventory of changes. |
 | `takeover` | "take over" | Finishes someone else's PR, branch, or agent thread, and keeps their credit. |
