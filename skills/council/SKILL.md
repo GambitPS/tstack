@@ -45,11 +45,14 @@ to any named member who is unavailable.
 
 ## Spark seat (Meta Muse Spark 1.3, light use)
 
-Muse Spark 1.3 sits in two places only, because its allowance is small:
+Muse Spark 1.3 runs on the Muse Code High Usage subscription. One review
+uses about 3-4% of its weekly limit and about 10% of its short window, so it
+sits in two places only:
 
 - **Sign-off:** once the three seats above are all satisfied, run Spark
   alone with the Correctness lens on the final diff. That is one review per
-  council. Run it after the other seats, never in their parallel wave. If it
+  council. Skip it when the diff is only docs, data or map exports. Run it
+  after the other seats, never in their parallel wave. If it
   finds a blocker (wrong behaviour, a compile or test failure, data loss),
   fix it and re-run Spark only, once. Note its should-fix and nit findings
   in the report, but do not act on them or start new rounds for them.
@@ -66,9 +69,13 @@ Run it read-only:
   `CLAUDE_CONFIG_DIR` pointed at the CLI proxy Claude home, wrapped in
   `timeout 1800`. Put the prompt on stdin.
 
-If the proxy refuses Spark, say so and finish without it. Do not swap in
-another model. Use Muse Wonder only when the user asks: it costs about twice
-as much per review.
+Keep its brief tight: give it the diff command, the intent, the repo rules
+and the few files it may read, and tell it not to search beyond them. Free
+exploration is what makes its reviews expensive.
+
+If the proxy refuses Spark (for example, the usage limit was hit), say so and
+finish without it. Do not swap in another model. Use Muse Wonder only when
+the user asks: it costs about twice as much per review.
 
 Give each delegate the request and relevant context. For review or feedback,
 keep their work read-only. Collect their responses and summarize the useful
